@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from flask import Flask
 from app.routes.main_routes import main_bp
 
@@ -9,7 +9,6 @@ def create_app():
     app.register_blueprint(main_bp)
 
     return app
-=======
 from flask import Flask, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -53,4 +52,3 @@ def create_app() -> Flask:
         print("✅ Migración lista: users.name + users.role")
 
     return app
->>>>>>> diego/main
