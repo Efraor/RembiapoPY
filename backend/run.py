@@ -1,11 +1,5 @@
 from app import create_app
 
-
-# Creamos la instancia de Flask ya configurada (con blueprints registrados, etc.)
-app = create_app()
-
-if __name__ == "__main__":
-    app.run()
 app = create_app()
 
 if __name__ == "__main__":
