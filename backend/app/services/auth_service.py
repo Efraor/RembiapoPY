@@ -102,14 +102,14 @@ def login_google(id_token_str: str) -> dict:
     except Exception as e:
         return {"ok": False, "error": f"Token de Google inválido (verify): {repr(e)}"}
 
-    # 3) Chequeos básicos del payload
+    
     aud = (payload.get("aud") or "").strip()
     iss = (payload.get("iss") or "").strip()
     email = (payload.get("email") or "").strip().lower()
     google_sub = (payload.get("sub") or "").strip()
     email_verified = payload.get("email_verified", True)
 
-    # 3.1) Audience debe matchear uno de tus Client IDs
+    
     if aud not in allowed_client_ids:
         return {
             "ok": False,
@@ -119,19 +119,20 @@ def login_google(id_token_str: str) -> dict:
             ),
         }
 
-    # 3.2) Issuer válido (por las dudas)
+    
     if iss not in ("accounts.google.com", "https://accounts.google.com"):
         return {"ok": False, "error": f"Token de Google inválido (issuer): iss={iss}"}
 
-    # 3.3) Debe traer sub y email
+    
     if not google_sub or not email:
         return {"ok": False, "error": "Token Google incompleto (sin sub/email)."}
 
-    # 3.4) Opcional: exigir email verificado
+    
     if email_verified is False:
         return {"ok": False, "error": "Email de Google no verificado."}
 
-    # 4) Buscar/crear usuario
+    # Buscar/crear usuario
+
     user = find_user_by_google_sub(google_sub)
     if user:
         token = _create_session(user["id"])
@@ -143,7 +144,7 @@ def login_google(id_token_str: str) -> dict:
 
     existing = find_user_by_email(email)
     if existing:
-        # comentario humano: en un sistema real lo ideal sería linkear sub al usuario existente
+        
         token = _create_session(existing["id"])
         return {
             "ok": True,

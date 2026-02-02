@@ -14,19 +14,14 @@ def _get_user_by_session_token(token: str):
 
     db = get_db()
     row = db.execute(
-        """
-        SELECT u.id, u.name, u.email, u.role, s.expires_at
-        FROM sessions s
-        JOIN users u ON u.id = s.user_id
-        WHERE s.token = ?
-        """,
+
         (token,),
     ).fetchone()
 
     if not row:
         return None
 
-    # comentario humano: expires_at está como ISO string (timezone-aware si lo guardamos así)
+    
     try:
         exp_dt = datetime.fromisoformat(row["expires_at"])
         if exp_dt.tzinfo is None:
@@ -52,5 +47,5 @@ def me():
     if not user:
         return jsonify({"ok": False, "error": "No autorizado"}), 401
 
-    # regla del enunciado: {id,name,email,role}
+    
     return jsonify(user), 200
