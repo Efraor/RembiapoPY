@@ -30,6 +30,10 @@ def create_app() -> Flask:
     from .routes.auth_routes import auth_bp
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
 
+    from .routes.admin_routes import admin_bp
+    app.register_blueprint(admin_bp, url_prefix="/api/admin")
+
+
     # -------- CLI Commands --------
     @app.cli.command("init-db")
     def init_db_command():
