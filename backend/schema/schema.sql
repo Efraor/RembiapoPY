@@ -8,6 +8,11 @@ CREATE TABLE IF NOT EXISTS users (
   email TEXT NOT NULL UNIQUE,
   password_hash TEXT,
   google_sub TEXT UNIQUE,
+
+  -- comentario humano: para /api/me (menús / admin)
+  name TEXT NOT NULL DEFAULT '',
+  role TEXT NOT NULL DEFAULT 'user',
+
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 

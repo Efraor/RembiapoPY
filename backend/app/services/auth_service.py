@@ -85,34 +85,71 @@ def login_local(email: str, password: str) -> dict:
 
 def login_google(id_token_str: str) -> dict:
 
-    # Valida el token de Google y autentica o crea el usuario
-    # Si el usuario ya existe, se reutiliza; si no, se crea uno nuevo
 
-    client_id = current_app.config.get("GOOGLE_CLIENT_ID", "").strip()
-    if not client_id:
+    raw_client_ids = (current_app.config.get("GOOGLE_CLIENT_ID") or "").strip()
+
+
+    allowed_client_ids = [c.strip() for c in raw_client_ids.split(",") if c.strip()]
+
+    if not allowed_client_ids:
         return {"ok": False, "error": "GOOGLE_CLIENT_ID no configurado en backend."}
+
 
     try:
         req = google_requests.Request()
-        payload = id_token.verify_oauth2_token(id_token_str, req, client_id)
-    except Exception:
-        return {"ok": False, "error": "Token de Google inválido."}
 
-    google_sub = payload.get("sub")
+        payload = id_token.verify_oauth2_token(id_token_str, req)
+    except Exception as e:
+        return {"ok": False, "error": f"Token de Google inválido (verify): {repr(e)}"}
+
+    # 3) Chequeos básicos del payload
+    aud = (payload.get("aud") or "").strip()
+    iss = (payload.get("iss") or "").strip()
     email = (payload.get("email") or "").strip().lower()
+    google_sub = (payload.get("sub") or "").strip()
+    email_verified = payload.get("email_verified", True)
 
+    # 3.1) Audience debe matchear uno de tus Client IDs
+    if aud not in allowed_client_ids:
+        return {
+            "ok": False,
+            "error": (
+                "Token de Google inválido (audience mismatch). "
+                f"aud={aud} no coincide con GOOGLE_CLIENT_ID."
+            ),
+        }
+
+    # 3.2) Issuer válido (por las dudas)
+    if iss not in ("accounts.google.com", "https://accounts.google.com"):
+        return {"ok": False, "error": f"Token de Google inválido (issuer): iss={iss}"}
+
+    # 3.3) Debe traer sub y email
     if not google_sub or not email:
         return {"ok": False, "error": "Token Google incompleto (sin sub/email)."}
 
+    # 3.4) Opcional: exigir email verificado
+    if email_verified is False:
+        return {"ok": False, "error": "Email de Google no verificado."}
+
+    # 4) Buscar/crear usuario
     user = find_user_by_google_sub(google_sub)
     if user:
         token = _create_session(user["id"])
-        return {"ok": True, "token": token, "user": {"id": user["id"], "email": user["email"]}}
+        return {
+            "ok": True,
+            "token": token,
+            "user": {"id": user["id"], "email": user["email"]},
+        }
 
     existing = find_user_by_email(email)
     if existing:
+        # comentario humano: en un sistema real lo ideal sería linkear sub al usuario existente
         token = _create_session(existing["id"])
-        return {"ok": True, "token": token, "user": {"id": existing["id"], "email": existing["email"]}}
+        return {
+            "ok": True,
+            "token": token,
+            "user": {"id": existing["id"], "email": existing["email"]},
+        }
 
     user_id = create_user_google(email, google_sub)
     token = _create_session(user_id)
