@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, g
 from app.db import get_db
 
-admin_bp = Blueprint('admin', _name_)
+admin_bp = Blueprint('admin', __name__)
 
 # --- NOTA DE SENIOR ---
 # En un sistema real, aquí usaríamos el token de la tabla 'sessions' 
