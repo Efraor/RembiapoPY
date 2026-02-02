@@ -39,8 +39,13 @@ def _get_user_by_session_token(token: str):
 
     db = get_db()
     row = db.execute(
-        
-        (token,),
+    """
+    SELECT u.id, u.name, u.email, u.role, s.expires_at
+    FROM sessions s
+    JOIN users u ON u.id = s.user_id
+    WHERE s.token = ?
+    """,
+    (token,),
     ).fetchone()
 
     if not row:
