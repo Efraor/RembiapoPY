@@ -14,7 +14,7 @@ def is_admin(user_id):
     return user and user['role'] == 'admin'
 
 # 1. GET /api/admin/profiles?status=pending
-@admin_bp.route('/api/admin/profiles', methods=['GET'])
+@admin_bp.route("/profiles", methods=["GET"])
 def get_pending_profiles():
     # Validación básica de seguridad (MVP)
     admin_id = request.headers.get('X-Admin-ID') 
@@ -26,7 +26,7 @@ def get_pending_profiles():
     
     # Traemos los datos del perfil + datos del usuario para que el admin sepa quién es
     query = """
-        SELECT p.id, u.name, u.email, p.city, p.whatsapp, p.status, p.created_at
+        SELECT p.id, u.name, u.email, p.city, p.whatsapp, p.status, p.updated_at
         FROM profiles p
         JOIN users u ON p.user_id = u.id
         WHERE p.status = ?
@@ -35,7 +35,7 @@ def get_pending_profiles():
     return jsonify([dict(p) for p in profiles]), 200
 
 # 2. PUT /api/admin/profiles/<id>/approve
-@admin_bp.route('/api/admin/profiles/<int:profile_id>/approve', methods=['PUT'])
+@admin_bp.route("/profiles/<int:profile_id>/approve", methods=["PUT"])
 def approve_profile(profile_id):
     admin_id = request.headers.get('X-Admin-ID')
     if not is_admin(admin_id):
@@ -55,7 +55,7 @@ def approve_profile(profile_id):
     return jsonify({"message": f"Perfil {profile_id} aprobado exitosamente"}), 200
 
 # 3. (Opcional) /api/admin/dashboard - Estadísticas rápidas
-@admin_bp.route('/api/admin/dashboard', methods=['GET'])
+@admin_bp.route('/dashboard', methods=['GET'])
 def admin_dashboard():
     admin_id = request.headers.get('X-Admin-ID')
     if not is_admin(admin_id):
