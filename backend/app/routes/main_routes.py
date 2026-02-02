@@ -1,17 +1,14 @@
-from flask import Blueprint, jsonify
+from datetime import datetime, timezone
 
-# Blueprint = "mini-app" de Flask para agrupar rutas relacionadas.
-# Lo registramos luego en create_app() usando app.register_blueprint(...)
+from flask import Blueprint, jsonify, request, current_app
+from ..db import get_db
+
+# Blueprint para rutas generales (/api/*)
 main_bp = Blueprint("main", __name__, url_prefix="/api")
 
-@main_bp.route("/health")
-#  Endpoint de salud (health check).
-def health():
-    return jsonify({"status": "ok"})
-from datetime import datetime, timezone
-from flask import Blueprint, jsonify, request, current_app
-
-from ..db import get_db
+# -----------------------
+# Helpers de sesión/cookie
+# -----------------------
 
 def _cookie_name() -> str:
     return current_app.config.get("SESSION_COOKIE_NAME", "rembiapy_session")
@@ -46,6 +43,15 @@ def _get_user_by_session_token(token: str):
         "email": row["email"],
         "role": row["role"] or "user",
     }
+
+# -------------
+# Routes (API)
+# -------------
+
+@main_bp.route("/health")
+#  Endpoint de salud (health check).
+def health():
+    return jsonify({"status": "ok"})
 
 @main_bp.get("/me")
 def me():
