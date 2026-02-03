@@ -1,4 +1,4 @@
-from flask import Flask
+﻿from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
 
@@ -13,7 +13,7 @@ def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # CORS (necesario si el frontend corre en 5500 y usás cookies/sesión)
+    # CORS (necesario si el frontend corre en 5500 y usÃ¡s cookies/sesiÃ³n)
     CORS(
         app,
         resources={r"/api/*": {"origins": ["http://127.0.0.1:5500", "http://localhost:5500"]}},
@@ -30,16 +30,21 @@ def create_app() -> Flask:
     from .routes.auth_routes import auth_bp
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
 
+    from .routes.user_routes import user_bp
+    app.register_blueprint(user_bp)
+
+    from .routes.profiles_routes import profile_bp
+    app.register_blueprint(profile_bp)
+
     from .routes.admin_routes import admin_bp
     app.register_blueprint(admin_bp, url_prefix="/api/admin")
-
 
     # -------- CLI Commands --------
     @app.cli.command("init-db")
     def init_db_command():
         """Inicializa la base de datos (schema.sql)."""
         init_db()
-        print("✅ DB inicializada")
+        print("âœ… DB inicializada")
 
     @app.cli.command("migrate-user-fields")
     def migrate_user_fields():
@@ -48,6 +53,6 @@ def create_app() -> Flask:
         db.execute("ALTER TABLE users ADD COLUMN name TEXT NOT NULL DEFAULT ''")
         db.execute("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user'")
         db.commit()
-        print("✅ Migración lista: users.name + users.role")
+        print("âœ… MigraciÃ³n lista: users.name + users.role")
 
     return app
