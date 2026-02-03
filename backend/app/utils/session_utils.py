@@ -1,13 +1,4 @@
-from flask import current_app, request
-
-
-def session_cookie_name() -> str:
-    return current_app.config.get("SESSION_COOKIE_NAME", "rembiapy_session")
-
-
-def get_session_token_from_cookie() -> str:
-    return request.cookies.get(session_cookie_name(), "") or ""
-from flask import current_app, request
+﻿from flask import current_app, request
 
 
 def session_cookie_name() -> str:
