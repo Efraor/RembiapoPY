@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, g
+﻿from flask import Blueprint, request, jsonify, g
 from app.db import get_db
 
 admin_bp = Blueprint('admin', __name__)
