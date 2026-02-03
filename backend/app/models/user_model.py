@@ -1,4 +1,5 @@
 from typing import Optional
+from werkzeug.security import generate_password_hash
 from ..db import get_db
 
 
@@ -27,9 +28,10 @@ def create_user_google(email: str, google_sub: str) -> int:
     return cur.lastrowid
 
 
-def create_user_local(email: str, password_hash: str) -> int:
-    """Crea un usuario nuevo con email/password"""
+def create_user_local(email: str, password: str) -> int:
+    """Crea un usuario nuevo con email/password (hashea antes de guardar)."""
     db = get_db()
+    password_hash = generate_password_hash(password)
     cur = db.execute(
         "INSERT INTO users (email, password_hash) VALUES (?, ?)",
         (email, password_hash),
