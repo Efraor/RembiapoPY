@@ -1,8 +1,8 @@
-from flask import Blueprint, jsonify
+﻿from flask import Blueprint, jsonify
 from ..models.session_models import get_user_by_session_token
 from ..utils.session_utils import get_session_token_from_cookie
 
-main_bp = Blueprint("main", __name__, url_prefix="/api")
+main_bp = Blueprint("main", __name__)
 
 
 # ----------------
