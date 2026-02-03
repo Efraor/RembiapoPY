@@ -1,13 +1,13 @@
-
-# Lógica de autenticación:
+﻿
+# LÃ³gica de autenticaciÃ³n:
 # - login con Google
-# - creación de sesiones
+# - creaciÃ³n de sesiones
 
 import secrets
 from datetime import datetime, timedelta, timezone
 from flask import current_app
 
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 
 from ..db import get_db
 from ..models.user_model import (
@@ -30,7 +30,7 @@ def _expires_at() -> str:
 
 def _create_session(user_id: int) -> str:
     
-    # Crea una sesión y devuelve el token
+    # Crea una sesiÃ³n y devuelve el token
 
     db = get_db()
     token = secrets.token_urlsafe(32)
@@ -51,13 +51,12 @@ def register_local(email: str, password: str) -> dict:
         return {"ok": False, "error": "Falta email o password."}
 
     if len(password) < 6:
-        return {"ok": False, "error": "La contraseña debe tener al menos 6 caracteres."}
+        return {"ok": False, "error": "La contraseÃ±a debe tener al menos 6 caracteres."}
 
     if find_user_by_email(email):
         return {"ok": False, "error": "Email ya registrado."}
 
-    password_hash = generate_password_hash(password)
-    user_id = create_user_local(email, password_hash)
+    user_id = create_user_local(email, password)
 
     token = _create_session(user_id)
     return {"ok": True, "token": token, "user": {"id": user_id, "email": email}}
@@ -71,10 +70,10 @@ def login_local(email: str, password: str) -> dict:
 
     user = find_user_by_email(email)
     if not user or not user.get("password_hash"):
-        return {"ok": False, "error": "Credenciales inválidas."}
+        return {"ok": False, "error": "Credenciales invÃ¡lidas."}
 
     if not check_password_hash(user["password_hash"], password):
-        return {"ok": False, "error": "Credenciales inválidas."}
+        return {"ok": False, "error": "Credenciales invÃ¡lidas."}
 
     token = _create_session(user["id"])
     return {"ok": True, "token": token, "user": {"id": user["id"], "email": user["email"]}}
@@ -100,7 +99,7 @@ def login_google(id_token_str: str) -> dict:
 
         payload = id_token.verify_oauth2_token(id_token_str, req)
     except Exception as e:
-        return {"ok": False, "error": f"Token de Google inválido (verify): {repr(e)}"}
+        return {"ok": False, "error": f"Token de Google invÃ¡lido (verify): {repr(e)}"}
 
     
     aud = (payload.get("aud") or "").strip()
@@ -114,14 +113,14 @@ def login_google(id_token_str: str) -> dict:
         return {
             "ok": False,
             "error": (
-                "Token de Google inválido (audience mismatch). "
+                "Token de Google invÃ¡lido (audience mismatch). "
                 f"aud={aud} no coincide con GOOGLE_CLIENT_ID."
             ),
         }
 
     
     if iss not in ("accounts.google.com", "https://accounts.google.com"):
-        return {"ok": False, "error": f"Token de Google inválido (issuer): iss={iss}"}
+        return {"ok": False, "error": f"Token de Google invÃ¡lido (issuer): iss={iss}"}
 
     
     if not google_sub or not email:
