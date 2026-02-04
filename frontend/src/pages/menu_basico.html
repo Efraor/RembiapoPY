@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>REMBIAPOPY - Servicios básicos</title>
+  <title>RembiapoPY - Servicios básicos</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
   <!-- navbar superior -->
   <nav class="navbar navbar-top">
     <div class="container-fluid d-flex justify-content-between align-items-center">
-      <span class="navbar-brand mb-0 h5">Rembiapopy</span>
+      <a href="menu_basico.html" class="navbar-brand mb-0 h5">RembiapoPY</a>
       <div class="d-flex gap-3 align-items-center">
         <span class="d-flex align-items-center"><i class="bi bi-geo-alt-fill me-1"></i> Asunción</span>
         <a href="publicar.html" class="nav-link">Publicar</a>
@@ -40,8 +40,11 @@
               type="text"
               class="form-control border-start-0"
               placeholder="Buscá: electricista, plomero, profesor..."
+              list="category-list"
+              id="categorySearch"
             />
-            <button class="btn btn-danger">
+            <datalist id="category-list"></datalist>
+            <button class="btn btn-danger" id="categorySearchBtn">
               Buscar
             </button>
           </div>
@@ -79,7 +82,7 @@
   <div class="container mb-4">
     <div class="d-flex justify-content-between align-items-center mb-2">
       <h5 class="mb-0">Categorías en dejado</h5>
-      <a href="#" class="text-decoration-none">Ver más &gt;</a>
+      <a href="categorias.html" class="text-decoration-none">Ver más &gt;</a>
     </div>
 
     <div class="row gx-3">
@@ -149,7 +152,7 @@
     requireAuth();
   </script>
   <script type="module">
-    import { initHomeList } from "../js/listings.js";
+    import { initHomeList, initCategorySearch } from "../js/listings.js";
     initHomeList({
       containerId: "home-profiles",
       limit: 4,
@@ -183,6 +186,11 @@
           photo_url: "https://randomuser.me/api/portraits/women/18.jpg",
         },
       ],
+    });
+    initCategorySearch({
+      inputId: "categorySearch",
+      datalistId: "category-list",
+      buttonId: "categorySearchBtn",
     });
   </script>
 
