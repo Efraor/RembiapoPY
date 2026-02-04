@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from flask import Blueprint, request, jsonify, current_app, redirect, make_response
 
 from ..db import get_db
-from ..services.auth_service import login_google 
+from ..services.auth_service import login_google, register_local, login_local
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 
@@ -39,9 +39,15 @@ def _get_user_by_session_token(token: str):
 
     db = get_db()
     row = db.execute(
-        
-        (token,),
-    ).fetchone()
+    """
+    SELECT u.id, u.email, u.name, u.role, s.expires_at
+    FROM sessions s
+    JOIN users u ON u.id = s.user_id
+    WHERE s.token = ?
+    """,
+    (token,),
+).fetchone()
+
 
     if not row:
         return None
@@ -90,6 +96,36 @@ def google_login_post():
     _set_session_cookie(resp, result["token"])
     return resp
 
+@auth_bp.post("/register")
+def register():
+    data = request.get_json(silent=True) or {}
+    email = data.get("email", "")
+    password = data.get("password", "")
+    name = data.get("name", "")
+    role = data.get("role", "user")
+
+    result = register_local(email, password, name=name, role=role)
+    if not result["ok"]:
+        return jsonify(result), 400
+
+    resp = make_response(jsonify(result), 200)
+    _set_session_cookie(resp, result["token"])
+    return resp
+
+
+@auth_bp.post("/login")
+def login():
+    data = request.get_json(silent=True) or {}
+    email = data.get("email", "")
+    password = data.get("password", "")
+
+    result = login_local(email, password)
+    if not result["ok"]:
+        return jsonify(result), 401
+
+    resp = make_response(jsonify(result), 200)
+    _set_session_cookie(resp, result["token"])
+    return resp
 
  # OAuth redirect flow
 

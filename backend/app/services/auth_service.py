@@ -43,9 +43,11 @@ def _create_session(user_id: int) -> str:
 
 # Autenticacion local (email + password)
 
-def register_local(email: str, password: str) -> dict:
+def register_local(email: str, password: str, name: str = "", role: str = "user") -> dict:
     email = (email or "").strip().lower()
     password = password or ""
+    name = (name or "").strip()
+    role = (role or "user").strip().lower()
 
     if not email or not password:
         return {"ok": False, "error": "Falta email o password."}
@@ -57,7 +59,9 @@ def register_local(email: str, password: str) -> dict:
         return {"ok": False, "error": "Email ya registrado."}
 
     password_hash = generate_password_hash(password)
-    user_id = create_user_local(email, password_hash)
+    if role not in ("user", "client", "pro"):
+        role = "user"
+    user_id = create_user_local(email, password_hash, name=name, role=role)
 
     token = _create_session(user_id)
     return {"ok": True, "token": token, "user": {"id": user_id, "email": email}}

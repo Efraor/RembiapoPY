@@ -33,11 +33,11 @@ def create_user_google(email: str, google_sub: str) -> int:
     db.commit()
     return cur.lastrowid
 
-def create_user_local(email: str, password_hash: str) -> int:
+def create_user_local(email: str, password_hash: str, name: str = "", role: str = "user") -> int:
     db = get_db()
     cur = db.execute(
-        "INSERT INTO users (email, password_hash) VALUES (?, ?)",
-        (email, password_hash),
+        "INSERT INTO users (email, password_hash, name, role) VALUES (?, ?, ?, ?)",
+        (email, password_hash, name or "", role or "user"),
     )
     db.commit()
     return cur.lastrowid

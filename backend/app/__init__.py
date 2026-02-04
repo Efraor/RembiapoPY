@@ -23,6 +23,9 @@ def create_app() -> Flask:
     from .routes.auth_routes import auth_bp
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
 
+    from .routes.profile_routes import profile_bp
+    app.register_blueprint(profile_bp, url_prefix="/api")
+
     @app.get("/api/health")
     def health():
         return jsonify({"ok": True})
@@ -38,6 +41,33 @@ def create_app() -> Flask:
         db.execute("ALTER TABLE users ADD COLUMN name TEXT NOT NULL DEFAULT ''")
         db.execute("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user'")
         db.commit()
-        print("✅ Migración lista: users.name + users.role")
+        print("Migracion lista: users.name + users.role")
+
+    @app.cli.command("migrate-profiles")
+    def migrate_profiles():
+        db = get_db()
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS profiles (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              user_id INTEGER NOT NULL UNIQUE,
+              full_name TEXT NOT NULL DEFAULT '',
+              role TEXT NOT NULL DEFAULT 'user',
+              category TEXT NOT NULL DEFAULT '',
+              service_title TEXT NOT NULL DEFAULT '',
+              phone TEXT NOT NULL DEFAULT '',
+              whatsapp TEXT NOT NULL DEFAULT '',
+              email TEXT NOT NULL DEFAULT '',
+              city TEXT NOT NULL DEFAULT '',
+              bio TEXT NOT NULL DEFAULT '',
+              photo_url TEXT NOT NULL DEFAULT '',
+              created_at TEXT NOT NULL DEFAULT (datetime('now')),
+              updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+              FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+            );
+            """
+        )
+        db.commit()
+        print("Migracion lista: profiles")
 
     return app
