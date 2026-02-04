@@ -1,14 +1,16 @@
 
-    /* colores principales similares a tu mockup */
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
+
+    /* colores principales en azul marino */
     :root {
-      --primary-brand: #0064e6; /* rosa/rojo fuerte */
-      --secondary-brand: #ff3a6e; /* variante o acento */
+      --primary-brand: #0b2545;
+      --secondary-brand: #1b4f9c;
       --bg-card: #ffffff;
     }
 
     body {
       background-color: #f8f9fa;
-      font-family: system-ui, sans-serif;
+      font-family: "Manrope", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       padding-bottom: 70px; /* para que el nav inferior no tape contenido */
     }
 
@@ -29,12 +31,8 @@
 
     /* hero/banner */
     .hero {
-  background: linear-gradient(
-    135deg,
-    #e60023,
-    #ff3a6e
-  );
-}
+      background: linear-gradient(135deg, #0b2545, #1b4f9c);
+    }
 
     .hero img {
       max-width: 100%;
@@ -90,7 +88,7 @@
       background: #fff;
       border-top: 1px solid #dee2e6;
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       align-items: center;
       height: 60px;
       z-index: 1030;
@@ -117,5 +115,34 @@
       justify-content: center;
       margin-top: -25px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #fff;
+      padding: 2px;
+    }
+
+    .btn-danger {
+      background-color: var(--secondary-brand);
+      border-color: var(--secondary-brand);
+    }
+
+    .btn-danger:hover,
+    .btn-danger:focus {
+      background-color: #153c7a;
+      border-color: #153c7a;
     }
   

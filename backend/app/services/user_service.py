@@ -1,4 +1,5 @@
-﻿from ..models.user_model import (
+﻿"""User service: local register/login helpers."""
+from ..models.user_model import (
     find_user_by_email,
     find_user_by_google_sub,
     create_user_google,

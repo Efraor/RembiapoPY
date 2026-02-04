@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
+
 :root{
-  --brand: #e91e63;      
-  --brand-dark: #c2185b;
-  --bg: #f6f7fb;
+  --brand: #0b2545;
+  --brand-dark: #081d36;
+  --bg: #f4f6fb;
   --card: #ffffff;
-  --text: #111827;
+  --text: #0f172a;
   --muted: #6b7280;
   --border: #e5e7eb;
-  --shadow: 0 12px 30px rgba(0,0,0,.08);
+  --shadow: 0 12px 30px rgba(11,37,69,.12);
   --radius: 18px;
 }
 
@@ -14,7 +16,7 @@
 
 body{
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: "Manrope", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: var(--bg);
   color: var(--text);
 }
@@ -23,7 +25,7 @@ body{
   background: var(--brand);
   color: white;
   padding: 18px 24px;
-  box-shadow: 0 8px 20px rgba(233,30,99,.25);
+  box-shadow: 0 10px 24px rgba(11,37,69,.28);
 }
 
 .header-inner{
@@ -40,6 +42,15 @@ body{
   gap: 10px;
   font-weight: 800;
   letter-spacing: .3px;
+}
+
+.brand-logo{
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #fff;
+  padding: 2px;
 }
 
 .brand-badge{
@@ -122,8 +133,8 @@ body{
 }
 
 .input:focus{
-  border-color: rgba(233,30,99,.65);
-  box-shadow: 0 0 0 4px rgba(233,30,99,.15);
+  border-color: rgba(11,37,69,.6);
+  box-shadow: 0 0 0 4px rgba(11,37,69,.15);
 }
 
 .btn{
@@ -209,8 +220,8 @@ body{
   .hero{
     width: 100%;
     max-width: 520px;
-    background: linear-gradient(135deg, rgba(233,30,99,.12), rgba(233,30,99,.04));
-    border: 1px solid rgba(233,30,99,.18);
+    background: linear-gradient(135deg, rgba(11,37,69,.12), rgba(11,37,69,.04));
+    border: 1px solid rgba(11,37,69,.18);
     border-radius: var(--radius);
     padding: 20px;
     color: var(--text);

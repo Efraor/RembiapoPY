@@ -1,4 +1,5 @@
-﻿from flask import Blueprint, request, jsonify
+﻿"""Admin routes: admin stats and moderation."""
+from flask import Blueprint, request, jsonify
 from app.models.admin_models import (
     is_admin,
     get_profiles_by_status,

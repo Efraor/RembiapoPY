@@ -1,4 +1,5 @@
-﻿from flask import Blueprint, jsonify, request
+﻿"""Profile routes: categories, profile CRUD, and compatibility endpoints."""
+from flask import Blueprint, jsonify, request
 from ..models.profile_model import (
     upsert_profile,
     get_profile_by_user_id,

@@ -1,3 +1,4 @@
+// Listings UI: category search, list rendering, and helpers.
 import { apiFetch } from "./api.js";
 
 function profileImage(profile, fallback) {

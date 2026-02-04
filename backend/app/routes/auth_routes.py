@@ -1,4 +1,5 @@
-﻿import secrets
+﻿"""Auth routes: Google login and logout."""
+import secrets
 import requests
 from flask import Blueprint, request, jsonify, current_app, redirect, make_response
 

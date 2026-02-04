@@ -1,4 +1,5 @@
-﻿from flask import Blueprint, jsonify
+﻿"""Core API routes: health and current session user."""
+from flask import Blueprint, jsonify
 from ..models.session_models import get_user_by_session_token
 from ..utils.session_utils import get_session_token_from_cookie
 
