@@ -34,8 +34,8 @@ def create_app() -> Flask:
     from .routes.user_routes import user_bp
     app.register_blueprint(user_bp)
 
-    from .routes.profiles_routes import profile_bp
-    app.register_blueprint(profile_bp)
+    from .routes.profile_routes import profile_bp
+    app.register_blueprint(profile_bp, url_prefix="/api")
 
     from .routes.admin_routes import admin_bp
     app.register_blueprint(admin_bp, url_prefix="/api/admin")

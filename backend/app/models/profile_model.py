@@ -1,57 +1,76 @@
-
-# Funciones de acceso a datos para perfiles
-
-from typing import Optional, List
+﻿from typing import Optional, List
 from ..db import get_db
+
+
+def _get_category_id(category_name: str) -> Optional[int]:
+    if not category_name:
+        return None
+    db = get_db()
+    name = category_name.strip()
+    row = db.execute(
+        "SELECT id FROM categories WHERE name = ?",
+        (name,),
+    ).fetchone()
+    if row:
+        return row["id"]
+    cur = db.execute(
+        "INSERT INTO categories (name) VALUES (?)",
+        (name,),
+    )
+    db.commit()
+    return cur.lastrowid
 
 
 def upsert_profile(user_id: int, data: dict) -> dict:
     db = get_db()
 
-    fields = {
-        "full_name": data.get("full_name", "") or "",
-        "role": data.get("role", "user") or "user",
-        "category": data.get("category", "") or "",
-        "service_title": data.get("service_title", "") or "",
-        "phone": data.get("phone", "") or "",
-        "whatsapp": data.get("whatsapp", "") or "",
-        "email": data.get("email", "") or "",
-        "city": data.get("city", "") or "",
-        "bio": data.get("bio", "") or "",
-        "photo_url": data.get("photo_url", "") or "",
-    }
+    full_name = data.get("full_name", "") or ""
+    role = data.get("role", "client") or "client"
+    email = data.get("email", "") or ""
 
+    category_name = data.get("category", "") or ""
+    city = data.get("city", "") or ""
+    whatsapp = data.get("whatsapp", "") or ""
+    bio = data.get("bio", "") or ""
+
+    category_id = _get_category_id(category_name) if category_name else None
+
+    # Actualiza datos del usuario
+    db.execute(
+        "UPDATE users SET name = COALESCE(?, name), role = COALESCE(?, role), email = COALESCE(?, email) WHERE id = ?",
+        (full_name or None, role or None, email or None, user_id),
+    )
+
+    # Inserta/actualiza perfil (schema actual con category_id/status)
     db.execute(
         """
-        INSERT INTO profiles (
-            user_id, full_name, role, category, service_title,
-            phone, whatsapp, email, city, bio, photo_url
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO profiles (user_id, category_id, bio, city, whatsapp, status)
+        VALUES (
+            ?, ?, ?, ?, ?,
+            CASE
+                WHEN ? = 'pro' THEN 'approved'
+                ELSE COALESCE((SELECT status FROM profiles WHERE user_id = ?), 'pending')
+            END
+        )
         ON CONFLICT(user_id) DO UPDATE SET
-            full_name=excluded.full_name,
-            role=excluded.role,
-            category=excluded.category,
-            service_title=excluded.service_title,
-            phone=excluded.phone,
-            whatsapp=excluded.whatsapp,
-            email=excluded.email,
-            city=excluded.city,
+            category_id=excluded.category_id,
             bio=excluded.bio,
-            photo_url=excluded.photo_url,
+            city=excluded.city,
+            whatsapp=excluded.whatsapp,
+            status=CASE
+                WHEN excluded.status = 'approved' THEN 'approved'
+                ELSE profiles.status
+            END,
             updated_at=datetime('now')
         """,
         (
             user_id,
-            fields["full_name"],
-            fields["role"],
-            fields["category"],
-            fields["service_title"],
-            fields["phone"],
-            fields["whatsapp"],
-            fields["email"],
-            fields["city"],
-            fields["bio"],
-            fields["photo_url"],
+            category_id,
+            bio,
+            city,
+            whatsapp,
+            role,
+            user_id,
         ),
     )
     db.commit()
@@ -61,38 +80,105 @@ def upsert_profile(user_id: int, data: dict) -> dict:
 def get_profile_by_user_id(user_id: int) -> Optional[dict]:
     db = get_db()
     row = db.execute(
-        "SELECT * FROM profiles WHERE user_id = ?",
+        """
+        SELECT u.name as full_name, u.email, u.role,
+               p.bio, p.city, p.whatsapp, p.updated_at,
+               c.name as category
+        FROM users u
+        LEFT JOIN profiles p ON p.user_id = u.id
+        LEFT JOIN categories c ON p.category_id = c.id
+        WHERE u.id = ?
+        """,
         (user_id,),
     ).fetchone()
     return dict(row) if row else None
 
 
-def list_profiles(category: str = "", limit: int = 20) -> List[dict]:
+def list_profiles(category: str = "", city: str = "", limit: int = 20) -> List[dict]:
     db = get_db()
 
-    # Solo perfiles profesionales (role = 'pro')
-    category = (category or "").strip().lower()
+    category = (category or "").strip()
+    city = (city or "").strip()
     limit = max(1, min(int(limit or 20), 100))
 
-    if category:
-        rows = db.execute(
-            """
-            SELECT * FROM profiles
-            WHERE role = 'pro' AND lower(category) = ?
-            ORDER BY updated_at DESC
-            LIMIT ?
-            """,
-            (category, limit),
-        ).fetchall()
-    else:
-        rows = db.execute(
-            """
-            SELECT * FROM profiles
-            WHERE role = 'pro'
-            ORDER BY updated_at DESC
-            LIMIT ?
-            """,
-            (limit,),
-        ).fetchall()
+    query = """
+        SELECT u.name as full_name,
+               u.picture as photo_url,
+               u.email,
+               p.bio as bio,
+               p.bio as service_title,
+               p.city,
+               p.whatsapp,
+               c.name as category
+        FROM profiles p
+        JOIN users u ON p.user_id = u.id
+        JOIN categories c ON p.category_id = c.id
+        WHERE p.status = 'approved'
+    """
+    params = []
 
+    if category:
+        query += " AND c.name = ?"
+        params.append(category)
+    if city:
+        query += " AND p.city = ?"
+        params.append(city)
+
+    query += " ORDER BY p.updated_at DESC LIMIT ?"
+    params.append(limit)
+
+    rows = db.execute(query, params).fetchall()
     return [dict(r) for r in rows]
+
+
+def get_approved_profiles(city=None, category_id=None) -> List[dict]:
+    db = get_db()
+
+    query = """
+        SELECT u.name as full_name, u.picture as photo_url,
+               p.bio, p.city, p.whatsapp, c.name AS category
+        FROM profiles p
+        JOIN users u ON p.user_id = u.id
+        JOIN categories c ON p.category_id = c.id
+        WHERE p.status = 'approved'
+    """
+    params = []
+
+    if city:
+        query += " AND p.city = ?"
+        params.append(city)
+
+    if category_id:
+        query += " AND p.category_id = ?"
+        params.append(category_id)
+
+    return [dict(r) for r in db.execute(query, params).fetchall()]
+
+
+def create_profile(user_id, category_id, bio, city, whatsapp):
+    db = get_db()
+    db.execute(
+        """
+        INSERT INTO profiles (user_id, category_id, bio, city, whatsapp)
+        VALUES (?, ?, ?, ?, ?)
+        """,
+        (user_id, category_id, bio, city, whatsapp)
+    )
+    db.commit()
+
+
+def approve_profile(profile_id):
+    db = get_db()
+    db.execute(
+        "UPDATE profiles SET status = 'approved' WHERE id = ?",
+        (profile_id,)
+    )
+    db.commit()
+
+
+def list_categories():
+    db = get_db()
+    rows = db.execute(
+        "SELECT name FROM categories ORDER BY name ASC"
+    ).fetchall()
+    return [row["name"] for row in rows]

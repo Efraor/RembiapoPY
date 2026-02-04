@@ -152,7 +152,6 @@ export async function initPublishPage() {
     const saved = await saveProfile(payload);
     if (!saved) return;
 
-    const category = (payload.category || "electricistas").toLowerCase();
-    window.location.href = `${category}.html`;
+    window.location.href = "menu_basico.html";
   });
 }
