@@ -13,8 +13,7 @@ def register_user_local(email: str, password: str) -> dict:
     if existing_user:
         return {"ok": False, "error": "Usuario ya existe"}
 
-    password_hash = generate_password_hash(password)
-    user_id = create_user_local(email, password_hash)
+    user_id = create_user_local(email, password)
     return {"ok": True, "user_id": user_id}
 
 
