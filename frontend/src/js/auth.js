@@ -1,4 +1,5 @@
-﻿// Maneja el login del usuario (Google y formulario)
+﻿// Auth page logic: local login/register and Google identity flow.
+// Maneja el login del usuario (Google y formulario)
 
 import { apiFetch } from "./api.js";
 

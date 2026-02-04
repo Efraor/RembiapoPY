@@ -2,9 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Electricistas - RembiapoPY</title>
+  <title>Flete - RembiapoPY</title>
 
-  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -13,7 +12,6 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar navbar-top">
     <div class="container-fluid d-flex justify-content-between align-items-center">
       <a href="menu_basico.html" class="navbar-brand brand-mark">
@@ -28,25 +26,21 @@
     </div>
   </nav>
 
-  <!-- CATEGORY HEADER -->
   <div class="container my-4">
-    <h3 class="fw-bold">Electricistas</h3>
+    <h3 class="fw-bold">Flete</h3>
     <p class="text-muted">Elegi tu proveedor favorito</p>
   </div>
 
-  <!-- PROFILES -->
   <div class="container mb-5">
     <div class="row gx-3" id="cards-container"></div>
   </div>
 
-  <!-- nav inferior estilo app -->
   <div class="bottom-nav">
     <a href="publicar.html" class="publish-btn">
       <i class="bi bi-plus-lg"></i>
     </a>
   </div>
 
-  <!-- Bootstrap JS -->
   <script src="../js/auth_guard.js"></script>
   <script>
     requireAuth();
@@ -55,22 +49,22 @@
     import { initCategoryList } from "../js/listings.js";
 
     initCategoryList({
-      category: "electricistas",
+      category: "flete",
       containerId: "cards-container",
       fallback: [
         {
-          full_name: "Carlos Rojas",
-          service_title: "Electricista residencial",
-          whatsapp: "+595 981 555 551",
-          email: "carlos.rojas@mail.com",
-          photo_url: "https://randomuser.me/api/portraits/men/12.jpg",
+          full_name: "Luis Gomez",
+          service_title: "Mudanzas y fletes",
+          whatsapp: "+595 981 555 881",
+          email: "luis.gomez@mail.com",
+          photo_url: "https://randomuser.me/api/portraits/men/41.jpg",
         },
         {
-          full_name: "Lucia Benitez",
-          service_title: "Instalaciones y tableros",
-          whatsapp: "+595 981 555 552",
-          email: "lucia.benitez@mail.com",
-          photo_url: "https://randomuser.me/api/portraits/women/53.jpg",
+          full_name: "Daniela Ortiz",
+          service_title: "Fletes urbanos",
+          whatsapp: "+595 981 555 882",
+          email: "daniela.ortiz@mail.com",
+          photo_url: "https://randomuser.me/api/portraits/women/41.jpg",
         },
       ],
     });

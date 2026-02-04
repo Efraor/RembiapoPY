@@ -1,7 +1,9 @@
+// Guard for pages that require an active session.
 const API_BASE = "http://127.0.0.1:5000";
 
 async function requireAuth() {
   try {
+    // Verifica si hay sesion valida
     const res = await fetch(`${API_BASE}/api/me`, {
       method: "GET",
       credentials: "include",

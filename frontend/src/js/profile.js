@@ -1,3 +1,4 @@
+// Profile UI: load, edit, publish, and category selection.
 import { apiFetch } from "./api.js";
 
 function setMsg(text) {
@@ -15,6 +16,30 @@ async function fetchProfile() {
   const { res, data } = await apiFetch("/profile", { method: "GET" });
   if (!res.ok) return null;
   return data.profile || null;
+}
+
+async function loadCategories(selectedValue = "") {
+  const select = document.getElementById("category");
+  if (!select) return;
+
+  const currentValue = selectedValue || select.value || "";
+  const { res, data } = await apiFetch("/categories", { method: "GET" });
+  if (!res.ok || !Array.isArray(data?.categories)) return;
+
+  const categories = data.categories.filter((name) => name);
+  if (!categories.length) return;
+
+  select.innerHTML = "";
+  categories.forEach((name) => {
+    const option = document.createElement("option");
+    option.value = name;
+    option.textContent = name;
+    select.appendChild(option);
+  });
+
+  if (currentValue) {
+    select.value = currentValue;
+  }
 }
 
 function readForm() {
@@ -73,6 +98,7 @@ function toggleProFields() {
 }
 
 async function saveProfile(payload) {
+  // Guarda perfil (POST /api/profile)
   const { res, data } = await apiFetch("/profile", {
     method: "POST",
     body: payload,
@@ -89,6 +115,7 @@ export async function initCreateProfilePage() {
 
   const me = await fetchMe();
   const profile = await fetchProfile();
+  await loadCategories(profile?.category || "");
   fillForm(profile, me);
 
   const pendingRole = localStorage.getItem("pendingRole");
@@ -117,8 +144,10 @@ export async function initEditProfilePage() {
 
   const me = await fetchMe();
   const profile = await fetchProfile();
+  await loadCategories(profile?.category || "");
   fillForm(profile, me);
 
+  // Modo lectura -> editar (toggling en UI)
   document.getElementById("role")?.addEventListener("change", toggleProFields);
   toggleProFields();
 
@@ -136,6 +165,7 @@ export async function initPublishPage() {
 
   const me = await fetchMe();
   const profile = await fetchProfile();
+  await loadCategories(profile?.category || "");
   fillForm(profile, me);
 
   if (document.getElementById("role")) {
@@ -150,7 +180,6 @@ export async function initPublishPage() {
     const saved = await saveProfile(payload);
     if (!saved) return;
 
-    const category = (payload.category || "electricistas").toLowerCase();
-    window.location.href = `${category}.html`;
+    window.location.href = "menu_basico.html";
   });
 }

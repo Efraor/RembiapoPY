@@ -1,5 +1,19 @@
 -- schema/seed.sql
 
+-- 0. Categorias base
+INSERT OR IGNORE INTO categories (name) VALUES
+('Plomeria'),
+('Electricidad'),
+('Limpieza'),
+('Carpinteria'),
+('Flete'),
+('Pintura'),
+('Jardineria'),
+('Mudanzas'),
+('Cerrajeria'),
+('Gasista'),
+('Albanileria');
+
 -- 1. Insertar Administrador (Registro Manual)
 INSERT INTO users (id, email, name, password_hash, role) 
 VALUES (1, 'admin@rembiapo.com', 'Admin Rembiapo', 'pbkdf2:sha256:260000$examplehash', 'admin');

@@ -16,8 +16,9 @@ def test_me_unauthorized(client):
 
 def test_profiles_list_empty(client):
     res = client.get("/api/profile")
-    assert res.status_code == 200
-    assert res.get_json() == []
+    assert res.status_code == 401
+    data = res.get_json()
+    assert data.get("ok") is False
 
 
 def test_profiles_create_missing_fields(client):
@@ -55,5 +56,6 @@ def test_profiles_create_and_list(client, app):
     assert res.status_code == 201
 
     res_list = client.get("/api/profile")
-    assert res_list.status_code == 200
-    assert res_list.get_json() == []
+    assert res_list.status_code == 401
+    data = res_list.get_json()
+    assert data.get("ok") is False

@@ -1,4 +1,5 @@
-﻿from typing import Optional
+﻿"""User data access and local auth helpers."""
+from typing import Optional
 from werkzeug.security import generate_password_hash
 from ..db import get_db
 

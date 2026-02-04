@@ -1,4 +1,5 @@
-﻿from flask import Blueprint, request, jsonify, make_response
+﻿"""User routes: local auth and user helpers."""
+from flask import Blueprint, request, jsonify, make_response
 from app.services.auth_service import register_local as register_local_service, login_local as login_local_service, login_google
 from app.utils.session_utils import set_session_cookie
 

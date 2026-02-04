@@ -1,4 +1,5 @@
-﻿# Logica de autenticacion:
+﻿"""Auth service: Google ID token verification and session creation."""
+# Logica de autenticacion:
 # - login con Google
 # - creacion de sesiones
 
