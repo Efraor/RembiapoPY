@@ -1,4 +1,5 @@
-﻿from flask import current_app, request
+﻿"""Session cookie helpers."""
+from flask import current_app, request
 
 
 def session_cookie_name() -> str:

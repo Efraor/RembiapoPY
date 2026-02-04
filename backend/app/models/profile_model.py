@@ -1,4 +1,5 @@
-﻿from typing import Optional, List
+﻿"""Profile data access: categories, profiles, and listing queries."""
+from typing import Optional, List
 from ..db import get_db
 
 

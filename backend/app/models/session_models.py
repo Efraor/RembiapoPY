@@ -1,3 +1,4 @@
+"""Session data access for cookie-based auth."""
 from datetime import datetime, timezone
 from ..db import get_db
 

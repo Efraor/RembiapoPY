@@ -1,3 +1,4 @@
+"""Admin data access helpers."""
 from app.db import get_db
 
 

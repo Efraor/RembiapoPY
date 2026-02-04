@@ -1,3 +1,4 @@
+// Guard for pages that require an active session.
 const API_BASE = "http://127.0.0.1:5000";
 
 async function requireAuth() {
