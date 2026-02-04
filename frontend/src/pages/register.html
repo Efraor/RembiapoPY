@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RembiapoPY • Registro</title>
+  <link rel="stylesheet" href="../css/login.css" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="../image/logo.jpg" alt="Logo RembiapoPY" class="brand-logo" />
+        <div>RembiapoPY</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="login-wrap">
+      <section class="hero">
+        <h2>Únete a la red de servicios más grande</h2>
+        <p>Registrate para ofrecer tus servicios o encontrar profesionales de confianza en todo Paraguay.</p>
+      </section>
+
+      <section class="card">
+        <h1>Crear cuenta</h1>
+        <p class="sub">Completá tus datos básicos</p>
+
+        <div class="field">
+          <label class="label" for="regName">Nombre Completo</label>
+          <input class="input" id="regName" type="text" placeholder="Tu nombre" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="regEmail">Email</label>
+          <input class="input" id="regEmail" type="email" placeholder="tu@email.com" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="regRole">¿Qué buscas?</label>
+          <select class="input" id="regRole">
+            <option value="client">Busco contratar profesionales</option>
+            <option value="pro">Ofrecer mis servicios profesionales</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="label" for="regPassword">Contraseña</label>
+          <input class="input" id="regPassword" type="password" placeholder="Mínimo 8 caracteres" />
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" id="btnDoRegister">Registrarme</button>
+          <a href="login.html" class="btn btn-ghost" style="text-decoration:none; text-align:center;">Ya tengo cuenta</a>
+        </div>
+
+        <div class="divider">o</div>
+
+        <div class="google-box">
+          <div id="googleBtn"></div>
+        </div>
+
+        <p id="msg" class="msg"></p>
+      </section>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initRegisterPage } from "../js/auth.js";
+    initRegisterPage();
+  </script>
+</body>
+</html>

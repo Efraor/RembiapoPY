@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RembiapoPY • Login</title>
+
+  <link rel="stylesheet" href="../css/login.css" />
+
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<!-- Página de login con email/contraseña y Google -->
+
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="../image/logo.jpg" alt="Logo RembiapoPY" class="brand-logo" />
+        <div>RembiapoPY</div>
+      </div>
+
+      <div class="header-links">
+        <span>📍 Asunción</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="login-wrap">
+      <section class="hero">
+        <h2>Encontrá profesionales cerca tuyo</h2>
+        <p>
+          Iniciá sesión para guardar favoritos, publicar servicios y contactar profesionales
+          en tu zona. Podés entrar con tu email o con Google.
+        </p>
+      </section>
+
+      <!-- Tarjeta del login -->
+
+      <section class="card">
+        <h1>Iniciar sesión</h1>
+        <p class="sub">Elegí tu método de acceso</p>
+
+        <div class="field">
+          <label class="label" for="email">Email</label>
+          <input class="input" id="email" type="email" placeholder="tu@email.com" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="password">Contraseña</label>
+          <input class="input" id="password" type="password" placeholder="mínimo 6 caracteres" />
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" id="btnLogin">Entrar</button>
+          <button class="btn btn-ghost" id="btnRegister">Crear cuenta</button>
+        </div>
+
+        <div class="divider">o</div>
+
+        <!-- Botón de login con Google -->
+         
+        <div class="google-box">
+          <div id="googleBtn"></div>
+        </div>
+
+        <p id="msg" class="msg"></p>
+      </section>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initLoginPage } from "../js/auth.js";
+    initLoginPage();
+  </script>
+</body>
+</html>
