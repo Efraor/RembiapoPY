@@ -1,5 +1,4 @@
-﻿
-// Maneja el login del usuario (Google y formulario)
+﻿// Maneja el login del usuario (Google y formulario)
 
 import { apiFetch } from "./api.js";
 
@@ -11,7 +10,9 @@ function showMsg(text) {
 }
 
 function setToken(token) {
-  localStorage.setItem("token", token);
+  if (token) {
+    localStorage.setItem("token", token);
+  }
 }
 
 // Login local (email + password)
@@ -22,18 +23,18 @@ async function handleLogin() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const { res, data } = await apiFetch("/auth/login", {
+  const { res, data } = await apiFetch("/users/login", {
     method: "POST",
     body: { email, password },
   });
 
   if (!res.ok) {
-    showMsg(data.error || "No se pudo iniciar sesión.");
+    showMsg(data.error || "No se pudo iniciar sesiÃ³n.");
     return;
   }
 
   setToken(data.token);
-  alert("✅ Login OK: " + data.user.email);
+  alert("âœ… Login OK: " + (data.user?.email || ""));
 }
 
 // Registro local (email + password)
@@ -44,7 +45,7 @@ async function handleRegister() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const { res, data } = await apiFetch("/auth/register", {
+  const { res, data } = await apiFetch("/users/register", {
     method: "POST",
     body: { email, password },
   });
@@ -55,7 +56,7 @@ async function handleRegister() {
   }
 
   setToken(data.token);
-  alert("✅ Cuenta creada: " + data.user.email);
+  alert("âœ… Cuenta creada: " + (data.user?.email || ""));
 }
 
 
@@ -63,8 +64,8 @@ async function handleRegister() {
 
 
 async function handleGoogleCredential(response) {
-    
-    // Envía el token de Google al backend para validación
+
+    // EnvÃ­a el token de Google al backend para validaciÃ³n
 
   showMsg("");
 
@@ -74,12 +75,12 @@ async function handleGoogleCredential(response) {
   });
 
   if (!res.ok) {
-    showMsg(data.error || "Google login falló.");
+    showMsg(data.error || "Google login fallÃ³.");
     return;
   }
 
   setToken(data.token);
-  alert("✅ Google Login OK: " + data.user.email);
+  alert("âœ… Google Login OK: " + (data.user?.email || ""));
 }
 
 // Init page
@@ -87,20 +88,20 @@ async function handleGoogleCredential(response) {
 export function initLoginPage() {
 
     // Inicializa botones y eventos del login
-  
+
     // Botones login / register
 
   document.getElementById("btnLogin")?.addEventListener("click", handleLogin);
   document.getElementById("btnRegister")?.addEventListener("click", handleRegister);
 
-  
+
     // Google Identity Services
 
   const GOOGLE_CLIENT_ID =
     "877002585907-ne7tte3vil46lrasqmj4np2kqq4l8t4l.apps.googleusercontent.com";
 
   if (!window.google?.accounts?.id) {
-    showMsg("No cargó Google Identity Services. Revisá conexión o el script.");
+    showMsg("No cargÃ³ Google Identity Services. RevisÃ¡ conexiÃ³n o el script.");
     return;
   }
 
