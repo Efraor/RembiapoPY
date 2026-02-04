@@ -1,288 +1,190 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rembiapo</title>
+  <meta charset="UTF-8" />
+  <title>REMBIAPOPY - Servicios básicos</title>
 
-<style>
-:root {
-    --primary: #e11d48;
-    --primary-dark: #be123c;
-    --bg: #f5f6f8;
-    --text: #1f2937;
-    --muted: #6b7280;
-}
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+  <!-- Iconos de Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
-* {
-    box-sizing: border-box;
-    font-family: 'Segoe UI', system-ui, sans-serif;
-}
-
-
-body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-}
-
-/* HEADER */
-.topbar {
-    background: linear-gradient(90deg, #f43f5e, var(--primary));
-    color: white;
-    padding: 16px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 22px;
-    font-weight: 700;
-}
-
-.top-actions span {
-    margin-left: 16px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-/* SEARCH */
-.search-box {
-    margin: 20px auto;
-    max-width: 900px;
-    display: flex;
-    background: white;
-    border-radius: 999px;
-    padding: 8px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-.search-box input {
-    border: none;
-    flex: 1;
-    padding: 12px 16px;
-    font-size: 15px;
-    outline: none;
-}
-
-.search-box button {
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 999px;
-    padding: 0 22px;
-    cursor: pointer;
-}
-
-/* HERO */
-.hero {
-    background: linear-gradient(90deg, #f43f5e, var(--primary));
-    color: white;
-    border-radius: 20px;
-    margin: 20px;
-    padding: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.hero-text h1 {
-    margin: 0 0 10px;
-}
-
-.hero img {
-    max-height: 220px;
-}
-
-/* SECTION TITLE */
-.section {
-    padding: 0 20px;
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.section-header a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-/* CATEGORIES */
-.categories {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 16px;
-    margin: 20px 0;
-}
-
-.category {
-    background: white;
-    border-radius: 14px;
-    padding: 16px;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
-/* PROFESSIONALS */
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    margin: 20px 0 100px;
-}
-
-.pro-card {
-    background: white;
-    border-radius: 16px;
-    padding: 14px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-}
-
-.pro-card img {
-    width: 100%;
-    border-radius: 12px;
-    margin-bottom: 10px;
-}
-
-.pro-card h3 {
-    margin: 5px 0;
-}
-
-.pro-card p {
-    margin: 0;
-    color: var(--muted);
-    font-size: 14px;
-}
-
-.pro-card span {
-    font-size: 13px;
-    color: var(--muted);
-}
-
-.pro-card button {
-    width: 100%;
-    border: none;
-    background: #10b981;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-/* BOTTOM NAV */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: white;
-    border-top: 1px solid #ddd;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-}
-
-.bottom-nav div {
-    text-align: center;
-    font-size: 13px;
-}
-
-.publish {
-    background: var(--primary);
-    color: white;
-    padding: 10px 18px;
-    border-radius: 999px;
-    font-weight: 600;
-}
-</style>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/styleprincipal.css">
 </head>
-
 <body>
 
-<header class="topbar">
-    <div class="logo">RembiapoPY</div> 
-    <div class="top-actions">
-        <span>📍 Asunción</span>
-        <span>❤️</span>
-        <span>Publicar</span>
-        <span>Mi perfil</span>
+  <!-- navbar superior -->
+  <nav class="navbar navbar-top">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <span class="navbar-brand mb-0 h5">Rembiapopy</span>
+      <div class="d-flex gap-3 align-items-center">
+        <span class="d-flex align-items-center"><i class="bi bi-geo-alt-fill me-1"></i> Asunción</span>
+        <a href="publicar.html" class="nav-link">Publicar</a>
+        <a href="mi_perfil.html" class="nav-link">Mi perfil</a>
+      </div>
     </div>
-</header>
+  </nav>
 
-<div class="search-box">
-    <input type="text" placeholder="Buscá: electricista, profe, diseñador...">
-    <button>🔍</button>
-</div>
-
-<section class="hero">
-    <div class="hero-text">
-        <h1>Encontrá profesionales cerca tuyo</h1>
-        <p>Buscá y contactá expertos en Asunción y alrededores.</p>
+  <!-- buscador -->
+  <section class="bg-light py-3">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+          <div class="input-group input-group-lg shadow-sm">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="bi bi-search"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control border-start-0"
+              placeholder="Buscá: electricista, plomero, profesor..."
+            />
+            <button class="btn btn-danger">
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-    <img src="c:\Users\pazad\Downloads\IMG-20260203-WA0007.jpg" alt="Profesional"> 
-</section>
+  </section>
 
-<section class="section">
-    <div class="section-header">
-        <h2>Categorías en dejado</h2>
-        <a href="#">Ver más ›</a>
-    </div>
+  <!-- HERO -->
+  <section class="py-4">
+    <div class="container">
+      <div class="row align-items-center hero rounded-4 overflow-hidden">
 
-    <div class="categories">
-        <div class="category">🏠<br>Hogar</div>
-        <div class="category">💻<br>Tecnología</div>
-        <div class="category">🎓<br>Clases</div>
-        <div class="category">🩺<br>Salud</div>
-        <div class="category">🛵<br>Transporte</div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="section-header">
-        <h2>Profesionales cerca de vos</h2>
-        <a href="#">Ver más ›</a>
-    </div>
-
-    <div class="cards">
-        <div class="pro-card">
-            <img src="https://i.imgur.com/Qn9U8zK.jpg">
-            <h3>Juan Pérez</h3>
-            <p>Electricista</p>
-            <span>📍 Asunción</span>
-            <button>📞 Contactar</button>
+        <!-- TEXTO -->
+        <div class="col-12 col-md-6 p-4 text-white">
+          <h2 class="fw-bold">Encontrá profesionales cerca tuyo</h2>
+          <p class="mb-0">Buscá y contactá expertos en Asunción y alrededores.</p>
         </div>
 
-        <div class="pro-card">
-            <img src="https://i.imgur.com/MY7x7jv.jpg">
-            <h3>Laura Gómez</h3>
-            <p>Profesora</p>
-            <span>📍 San Lorenzo</span>
-            <button>📞 Contactar</button>
+        <!-- IMAGEN -->
+        <div class="col-12 col-md-6 d-none d-md-block p-0">
+          <img
+            src="https://picsum.photos/seed/rembiapy-hero/900/600"
+            class="img-fluid w-100 h-100"
+            style="object-fit: cover;"
+            alt="Profesional"
+          />
         </div>
 
-        <div class="pro-card">
-            <img src="https://i.imgur.com/Z8Y4Z7D.jpg">
-            <h3>Ricardo Benítez</h3>
-            <p>Técnico IT</p>
-            <span>📍 Fernando</span>
-            <button>📞 Contactar</button>
-        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<div class="bottom-nav">
-    <div>🏠<br>Inicio</div>
-    <div>📂<br>Categorías</div>
-    <div>❤️<br>Favoritos</div>
-    <div>👤<br>Perfil</div>
-    <div class="publish">➕ Publicar</div>
-</div>
+  <!-- categorías -->
+  <div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5 class="mb-0">Categorías en dejado</h5>
+      <a href="#" class="text-decoration-none">Ver más &gt;</a>
+    </div>
+
+    <div class="row gx-3">
+      <div class="col-6 col-md-3 mb-3">
+        <div class="category-card p-3 text-center">
+          <div class="category-icon mb-2">🛠️</div>
+          <h6 class="mb-1"><a href="electricistas.html">Electricistas</a></h6>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3 mb-3">
+        <div class="category-card p-3 text-center">
+          <div class="category-icon mb-2">👨‍🔧</div>
+          <h6 class="mb-1"><a href="plomeros.html">Plomeros</a></h6>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3 mb-3">
+        <div class="category-card p-3 text-center">
+          <div class="category-icon mb-2">🔧</div>
+          <h6 class="mb-1"><a href="mecanicos.html">Mecánicos</a></h6>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3 mb-3">
+        <div class="category-card p-3 text-center">
+          <div class="category-icon mb-2">💻</div>
+          <h6 class="mb-1"><a href="tecnicos.html">Técnicos</a></h6>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- profesionales cerca -->
+  <div class="container mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5 class="mb-0">Profesionales cerca de vos</h5>
+      <a href="#" class="text-decoration-none">Ver más &gt;</a>
+    </div>
+
+    <div class="row gx-3" id="home-profiles"></div>
+  </div>
+
+  <!-- nav inferior estilo app -->
+  <div class="bottom-nav">
+    <a href="menu_basico.html">
+      <i class="bi bi-house-fill"></i>
+      <span>Inicio</span>
+    </a>
+    <a href="#">
+      <i class="bi bi-heart-fill"></i>
+      <span>Favoritos</span>
+    </a>
+    <a href="mi_perfil.html">
+      <i class="bi bi-person-fill"></i>
+      <span>Mi perfil</span>
+    </a>
+    <a href="publicar.html" class="publish-btn">
+      <i class="bi bi-plus-lg"></i>
+    </a>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/auth_guard.js"></script>
+  <script>
+    requireAuth();
+  </script>
+  <script type="module">
+    import { initHomeList } from "../js/listings.js";
+    initHomeList({
+      containerId: "home-profiles",
+      limit: 4,
+      fallback: [
+        {
+          full_name: "Juan Pérez",
+          service_title: "Electricista",
+          whatsapp: "+595 981 555 111",
+          email: "juan.perez@mail.com",
+          photo_url: "https://randomuser.me/api/portraits/men/32.jpg",
+        },
+        {
+          full_name: "Laura Gómez",
+          service_title: "Profesora de Matemática",
+          whatsapp: "+595 981 555 222",
+          email: "laura.gomez@mail.com",
+          photo_url: "https://randomuser.me/api/portraits/women/44.jpg",
+        },
+        {
+          full_name: "Ricardo Benítez",
+          service_title: "Técnico en Computadoras",
+          whatsapp: "+595 981 555 333",
+          email: "ricardo.benitez@mail.com",
+          photo_url: "https://randomuser.me/api/portraits/men/61.jpg",
+        },
+        {
+          full_name: "Mariana Díaz",
+          service_title: "Nutricionista",
+          whatsapp: "+595 981 555 444",
+          email: "mariana.diaz@mail.com",
+          photo_url: "https://randomuser.me/api/portraits/women/18.jpg",
+        },
+      ],
+    });
+  </script>
 
 </body>
 </html>

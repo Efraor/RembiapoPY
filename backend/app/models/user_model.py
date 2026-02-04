@@ -1,4 +1,4 @@
-from typing import Optional
+﻿from typing import Optional
 from werkzeug.security import generate_password_hash
 from ..db import get_db
 
@@ -18,7 +18,7 @@ def find_user_by_google_sub(google_sub: str) -> Optional[dict]:
 
 
 def create_user_google(email: str, google_sub: str) -> int:
-    """Crea un usuario nuevo con autenticación Google"""
+    """Crea un usuario nuevo con autenticacion Google"""
     db = get_db()
     cur = db.execute(
         "INSERT INTO users (email, google_sub) VALUES (?, ?)",
@@ -28,13 +28,13 @@ def create_user_google(email: str, google_sub: str) -> int:
     return cur.lastrowid
 
 
-def create_user_local(email: str, password: str) -> int:
+def create_user_local(email: str, password: str, name: str = "", role: str = "client") -> int:
     """Crea un usuario nuevo con email/password (hashea antes de guardar)."""
     db = get_db()
     password_hash = generate_password_hash(password)
     cur = db.execute(
-        "INSERT INTO users (email, password_hash) VALUES (?, ?)",
-        (email, password_hash),
+        "INSERT INTO users (email, password_hash, name, role) VALUES (?, ?, ?, ?)",
+        (email, password_hash, name or "", role or "client"),
     )
     db.commit()
     return cur.lastrowid

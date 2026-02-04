@@ -1,4 +1,4 @@
-import secrets
+﻿import secrets
 import requests
 from flask import Blueprint, request, jsonify, current_app, redirect, make_response
 
@@ -98,7 +98,7 @@ def google_callback():
 
     front_url = current_app.config.get(
         "FRONTEND_REDIRECT_URL",
-        "http://127.0.0.1:5500/frontend/src/pages/login.html"
+        "http://127.0.0.1:5500/frontend/src/pages/login.html",
     )
 
     resp = make_response(redirect(front_url))

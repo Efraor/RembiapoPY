@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from .config import Config
 from .db import close_db, init_db, get_db
 
+
 def create_app() -> Flask:
     # Cargar variables de entorno desde .env
     load_dotenv()
@@ -13,7 +14,7 @@ def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # CORS (necesario si el frontend corre en 5500 y usÃ¡s cookies/sesiÃ³n)
+    # CORS (necesario si el frontend corre en 5500 y usas cookies/sesion)
     CORS(
         app,
         resources={r"/api/*": {"origins": ["http://127.0.0.1:5500", "http://localhost:5500"]}},
@@ -44,7 +45,7 @@ def create_app() -> Flask:
     def init_db_command():
         """Inicializa la base de datos (schema.sql)."""
         init_db()
-        print("âœ… DB inicializada")
+        print("DB inicializada")
 
     @app.cli.command("migrate-user-fields")
     def migrate_user_fields():
@@ -53,6 +54,33 @@ def create_app() -> Flask:
         db.execute("ALTER TABLE users ADD COLUMN name TEXT NOT NULL DEFAULT ''")
         db.execute("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user'")
         db.commit()
-        print("âœ… MigraciÃ³n lista: users.name + users.role")
+        print("Migracion lista: users.name + users.role")
+
+    @app.cli.command("migrate-profiles")
+    def migrate_profiles():
+        db = get_db()
+        db.execute(
+            """
+            CREATE TABLE IF NOT EXISTS profiles (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              user_id INTEGER NOT NULL UNIQUE,
+              full_name TEXT NOT NULL DEFAULT '',
+              role TEXT NOT NULL DEFAULT 'user',
+              category TEXT NOT NULL DEFAULT '',
+              service_title TEXT NOT NULL DEFAULT '',
+              phone TEXT NOT NULL DEFAULT '',
+              whatsapp TEXT NOT NULL DEFAULT '',
+              email TEXT NOT NULL DEFAULT '',
+              city TEXT NOT NULL DEFAULT '',
+              bio TEXT NOT NULL DEFAULT '',
+              photo_url TEXT NOT NULL DEFAULT '',
+              created_at TEXT NOT NULL DEFAULT (datetime('now')),
+              updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+              FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+            );
+            """
+        )
+        db.commit()
+        print("Migracion lista: profiles")
 
     return app

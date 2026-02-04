@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RembiapoPY • Crear Perfil</title>
+  <link rel="stylesheet" href="../css/login.css" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-badge">Py</div>
+        <div>RembiapoPY</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="login-wrap">
+      <section class="hero">
+        <h2>Creá tu perfil</h2>
+        <p>Completá tus datos para aparecer en las categorías o contratar servicios.</p>
+      </section>
+
+      <section class="card">
+        <h1>Datos del perfil</h1>
+        <p class="sub">Podés editar esto más tarde</p>
+
+        <div class="field">
+          <label class="label" for="fullName">Nombre completo</label>
+          <input class="input" id="fullName" type="text" placeholder="Tu nombre y apellido" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="role">Tipo de perfil</label>
+          <select class="input" id="role">
+            <option value="client">Busco contratar servicios</option>
+            <option value="pro">Quiero ofrecer mis servicios</option>
+          </select>
+        </div>
+
+        <div id="proFields">
+          <div class="field">
+            <label class="label" for="category">Categoría</label>
+            <select class="input" id="category">
+              <option value="electricistas">Electricistas</option>
+              <option value="plomeros">Plomeros</option>
+              <option value="mecanicos">Mecánicos</option>
+              <option value="tecnicos">Técnicos</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="label" for="serviceTitle">Servicio principal</label>
+            <input class="input" id="serviceTitle" type="text" placeholder="Ej: Instalaciones eléctricas" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="email">Email</label>
+          <input class="input" id="email" type="email" placeholder="tu@email.com" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="phone">Teléfono</label>
+          <input class="input" id="phone" type="tel" placeholder="+595 981 000 000" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="whatsapp">WhatsApp</label>
+          <input class="input" id="whatsapp" type="tel" placeholder="+595 981 000 000" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="city">Ciudad</label>
+          <input class="input" id="city" type="text" placeholder="Asunción" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="photoUrl">Foto de perfil (URL)</label>
+          <input class="input" id="photoUrl" type="url" placeholder="https://..." />
+        </div>
+
+        <div class="field">
+          <label class="label" for="bio">Descripción</label>
+          <textarea class="input" id="bio" rows="3" placeholder="Contá sobre tu experiencia"></textarea>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-primary" id="btnSaveProfile">Guardar perfil</button>
+          <a href="login.html" class="btn btn-ghost" style="text-decoration:none; text-align:center;">Volver</a>
+        </div>
+
+        <p id="msg" class="msg"></p>
+      </section>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initCreateProfilePage } from "../js/profile.js";
+    initCreateProfilePage();
+  </script>
+  <script src="../js/auth_guard.js"></script>
+  <script>
+    requireAuth();
+  </script>
+</body>
+</html>

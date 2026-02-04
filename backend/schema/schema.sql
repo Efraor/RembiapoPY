@@ -1,6 +1,4 @@
-
-
--- Tablas base para autenticación de usuarios
+﻿-- Tablas base para autenticacion de usuarios
 -- users: usuarios registrados por email o Google
 -- sessions: sesiones activas con token
 
@@ -16,11 +14,11 @@ CREATE TABLE IF NOT EXISTS users (
     role TEXT NOT NULL CHECK(role IN ('client', 'pro', 'admin')) DEFAULT 'client',
     created_at TEXT NOT NULL DEFAULT (datetime('now')),
 
-    -- debe tener al menos un método de auth (google o password)
+    -- debe tener al menos un metodo de auth (google o password)
     CONSTRAINT check_auth_method CHECK (google_sub IS NOT NULL OR password_hash IS NOT NULL)
 );
 
--- 2. Tabla de Categorías
+-- 2. Tabla de Categorias
 CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT UNIQUE NOT NULL
@@ -51,7 +49,7 @@ CREATE TABLE IF NOT EXISTS reports (
     FOREIGN KEY (profile_id) REFERENCES profiles(id) ON DELETE CASCADE
 );
 
--- 5. Tabla de Sessiones
+-- 5. Tabla de Sesiones
 CREATE TABLE IF NOT EXISTS sessions (
   token TEXT PRIMARY KEY,
   user_id INTEGER NOT NULL,
@@ -61,5 +59,5 @@ CREATE TABLE IF NOT EXISTS sessions (
 );
 
 -- Datos iniciales obligatorios
-INSERT OR IGNORE INTO categories (name) VALUES 
-('Plomería'), ('Electricidad'), ('Limpieza'), ('Carpintería'), ('Flete');
+INSERT OR IGNORE INTO categories (name) VALUES
+('Plomeria'), ('Electricidad'), ('Limpieza'), ('Carpinteria'), ('Flete');

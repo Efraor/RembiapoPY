@@ -1,0 +1,169 @@
+/* 1. VARIABLES Y CONFIGURACIÓN BASE */
+:root {
+    --primary-color: #ff004c;    /* El rojo característico de ProPY */
+    --primary-light: #fff0f3;   /* Rosa suave para fondos de etiquetas */
+    --whatsapp-green: #2ec4b6;  /* Color verde del botón contactar */
+    --bg-color: #f8f9fa;
+    --text-dark: #333;
+    --text-gray: #666;
+    --white: #ffffff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    margin: 0;
+    padding-bottom: 80px; /* Espacio para que la nav inferior no tape contenido */
+    color: var(--text-dark);
+}
+
+.container { 
+    max-width: 900px; /* Centra el contenido en pantallas grandes */
+    margin: 0 auto;
+    padding: 15px; 
+}
+
+/* 2. CABECERA (TOP BAR) */
+.top-bar {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.avatar-min { 
+    border-radius: 50%; 
+    border: 2px solid var(--white); 
+    width: 30px; 
+    height: 30px; 
+}
+
+/* 3. TARJETA DE PERFIL (PROFILE DETAIL CARD) */
+.profile-detail-card {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-top: 10px;
+}
+
+.profile-main-info { 
+    display: flex; 
+    gap: 30px; 
+    flex-wrap: wrap; /* Se ajusta a móviles automáticamente */
+}
+
+/* Columna Imagen */
+.main-photo {
+    width: 100%;
+    max-width: 200px;
+    height: 200px;
+    border-radius: 12px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 15px;
+}
+
+/* 4. BOTONES */
+.btn-contact {
+    background-color: var(--whatsapp-green);
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    width: 100%;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-report {
+    background: transparent;
+    border: 1px solid #ddd;
+    color: #999;
+    padding: 8px;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* 5. ETIQUETAS Y BADGES (DINÁMICOS) */
+.verified {
+    background: #4caf50;
+    color: white;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-left: 10px;
+    font-weight: normal;
+}
+
+.tag-pill {
+    background: var(--primary-light);
+    color: var(--primary-color);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    display: inline-block;
+    margin: 5px 5px 0 0;
+    border: 1px solid rgba(255, 0, 76, 0.1);
+}
+
+.spec-item {
+    background: #f1f1f1;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: inline-block;
+    margin: 5px 10px 5px 0;
+    color: var(--text-dark);
+}
+
+.spec-item.active {
+    background: var(--primary-light);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* 6. ELEMENTOS DE TEXTO */
+.separator { 
+    border: 0; 
+    border-top: 1px solid #eee; 
+    margin: 25px 0; 
+}
+
+.location-text { 
+    color: var(--text-gray); 
+    font-size: 14px; 
+    margin: 5px 0; 
+}
+
+.stars { color: #FFD700; font-size: 18px; }
+
+/* 7. NAV INFERIOR (ESTILO APP) */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: var(--white);
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+    border-top: 1px solid #eee;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.bottom-nav i {
+    color: var(--text-gray);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.bottom-nav i:hover { color: var(--primary-color); }

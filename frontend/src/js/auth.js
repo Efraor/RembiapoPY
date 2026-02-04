@@ -29,12 +29,12 @@ async function handleLogin() {
   });
 
   if (!res.ok) {
-    showMsg(data.error || "No se pudo iniciar sesiÃ³n.");
+    showMsg(data.error || "No se pudo iniciar sesión.");
     return;
   }
 
   setToken(data.token);
-  alert("âœ… Login OK: " + (data.user?.email || ""));
+  window.location.href = "menu_basico.html";
 }
 
 // Registro local (email + password)
@@ -42,12 +42,14 @@ async function handleLogin() {
 async function handleRegister() {
   showMsg("");
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const name = document.getElementById("regName")?.value || "";
+  const email = document.getElementById("regEmail")?.value || "";
+  const role = document.getElementById("regRole")?.value || "user";
+  const password = document.getElementById("regPassword")?.value || "";
 
   const { res, data } = await apiFetch("/users/register", {
     method: "POST",
-    body: { email, password },
+    body: { name, email, role, password },
   });
 
   if (!res.ok) {
@@ -56,7 +58,8 @@ async function handleRegister() {
   }
 
   setToken(data.token);
-  alert("âœ… Cuenta creada: " + (data.user?.email || ""));
+  localStorage.setItem("pendingRole", role);
+  window.location.href = "crear_perfil.html";
 }
 
 
@@ -65,7 +68,7 @@ async function handleRegister() {
 
 async function handleGoogleCredential(response) {
 
-    // EnvÃ­a el token de Google al backend para validaciÃ³n
+    // Envía el token de Google al backend para validación
 
   showMsg("");
 
@@ -75,33 +78,20 @@ async function handleGoogleCredential(response) {
   });
 
   if (!res.ok) {
-    showMsg(data.error || "Google login fallÃ³.");
+    showMsg(data.error || "Google login falló.");
     return;
   }
 
   setToken(data.token);
-  alert("âœ… Google Login OK: " + (data.user?.email || ""));
+  window.location.href = "menu_basico.html";
 }
 
-// Init page
-
-export function initLoginPage() {
-
-    // Inicializa botones y eventos del login
-
-    // Botones login / register
-
-  document.getElementById("btnLogin")?.addEventListener("click", handleLogin);
-  document.getElementById("btnRegister")?.addEventListener("click", handleRegister);
-
-
-    // Google Identity Services
-
+function initGoogleButton() {
   const GOOGLE_CLIENT_ID =
     "877002585907-ne7tte3vil46lrasqmj4np2kqq4l8t4l.apps.googleusercontent.com";
 
   if (!window.google?.accounts?.id) {
-    showMsg("No cargÃ³ Google Identity Services. RevisÃ¡ conexiÃ³n o el script.");
+    showMsg("No cargó Google Identity Services. Revisá conexión o el script.");
     return;
   }
 
@@ -114,4 +104,26 @@ export function initLoginPage() {
     document.getElementById("googleBtn"),
     { theme: "outline", size: "large", width: 360 }
   );
+}
+
+// Init page
+
+export function initLoginPage() {
+
+    // Inicializa botones y eventos del login
+
+    // Botones login / register
+
+  document.getElementById("btnLogin")?.addEventListener("click", handleLogin);
+  document.getElementById("btnRegister")?.addEventListener("click", () => {
+    window.location.href = "register.html";
+  });
+
+  // Google Identity Services
+  initGoogleButton();
+}
+
+export function initRegisterPage() {
+  document.getElementById("btnDoRegister")?.addEventListener("click", handleRegister);
+  initGoogleButton();
 }
