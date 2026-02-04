@@ -90,6 +90,7 @@ function normalizeCategory(value) {
 }
 
 function resolveCategoryPage(value) {
+  // Mapa de entradas -> pagina destino
   const key = normalizeCategory(value);
   const map = {
     electricidad: "electricistas.html",

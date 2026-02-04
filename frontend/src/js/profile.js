@@ -73,6 +73,7 @@ function toggleProFields() {
 }
 
 async function saveProfile(payload) {
+  // Guarda perfil (POST /api/profile)
   const { res, data } = await apiFetch("/profile", {
     method: "POST",
     body: payload,
@@ -119,6 +120,7 @@ export async function initEditProfilePage() {
   const profile = await fetchProfile();
   fillForm(profile, me);
 
+  // Modo lectura -> editar (toggling en UI)
   document.getElementById("role")?.addEventListener("change", toggleProFields);
   toggleProFields();
 
