@@ -1,0 +1,104 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de {{ profesional.nombre }} - ProPY</title>
+    
+    <link href="" rel="stylesheet">
+    <link rel="stylesheet" href="">
+    
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="logo" style="font-weight: bold; font-size: 20px;">
+            <i class="fas fa-parking"></i> Rembiapo PY
+        </div>
+        <div class="user-nav" style="display: flex; align-items: center; gap: 15px;">
+            <span><i class="fas fa-map-marker-alt"></i> Asunción <i class="fas fa-chevron-down" style="font-size: 10px;"></i></span>
+            <i class="far fa-heart"></i>
+            <span>Publicar</span>
+            <img src="" alt="Avatar Usuario" class="avatar-min">
+            <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <nav class="breadcrumb" style="margin: 15px 0; font-size: 14px; color: #666;">
+            &lt; Inicio / {{ profesional.categoria_slug }} / <strong>{{ profesional.nombre }}</strong>
+        </nav>
+
+        <section class="profile-detail-card">
+            
+            <div class="profile-main-info">
+                
+                <div class="photo-column">
+                    <img src="{{ profesional.foto_url }}" alt="{{ profesional.nombre }}" class="main-photo">
+                    
+                    <a href="https://wa.me/{{ profesional.telefono }}" class="btn-contact" style="text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+                    </a>
+                    
+                    <button class="btn-report">Reportar Perfil</button>
+                </div>
+
+                <div class="text-column">
+                    <div class="title-row" style="display: flex; align-items: center; justify-content: space-between;">
+                        <h1 style="margin: 0; font-size: 28px;">
+                            {{ profesional.nombre }} 
+                            {% if profesional.es_verificado %}
+                            <span class="verified"><i class="fas fa-check-circle"></i> Verificado</span>
+                            {% endif %}
+                        </h1>
+                        <i class="far fa-heart" style="color: var(--primary-color); cursor: pointer; font-size: 20px;"></i>
+                    </div>
+
+                    <p class="profesion-title" style="font-size: 18px; margin: 8px 0;">{{ profesional.especialidad_principal }}</p>
+                    <p class="location-text"><i class="fas fa-map-marker-alt"></i> {{ profesional.ciudad }}</p>
+                    
+    
+
+                    <div class="tags-container" style="margin-top: 15px;">
+                        <span class="tag-pill">{{ profesional.experiencia_años }} años de experiencia</span>
+                        {% for etiqueta in profesional.etiquetas_destacadas %}
+                        <span class="tag-pill">{{ etiqueta }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <hr class="separator">
+
+            <div class="about-me">
+                <h3 style="margin-bottom: 10px;">Sobre Mí</h3>
+                <div class="bio-content" style="line-height: 1.6; color: #444;">
+                    {{ profesional.biografia | safe }}
+                </div>
+            </div>
+
+            <div class="specialties" style="margin-top: 25px;">
+                <h3 style="margin-bottom: 15px;">Especialidades</h3>
+                <div class="spec-list">
+                    {% for especialidad in profesional.lista_especialidades %}
+                    <span class="spec-item {% if especialidad.id == profesional.id_especialidad_top %}active{% endif %}">
+                        {{ especialidad.nombre }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <nav class="bottom-nav">
+        <div style="text-align: center;"><i class="fas fa-home"></i></div>
+        <div style="text-align: center;"><i class="fas fa-search"></i></div>
+        <div style="text-align: center; color: var(--primary-color);"><i class="fas fa-plus-circle" style="font-size: 30px;"></i></div>
+        <div style="text-align: center;"><i class="far fa-comment"></i></div>
+        <div style="text-align: center;"><i class="far fa-user"></i></div>
+    </nav>
+
+</body>
+</html>

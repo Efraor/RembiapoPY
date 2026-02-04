@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil del Usuario</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .navbar {
+      background-color: #e60023;
+    }
+
+    .navbar a, .navbar span {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .profile-card {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: 40px auto;
+    }
+
+    .profile-card h2 {
+      color: #e60023;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-label {
+      font-weight: 500;
+    }
+
+    .btn-submit {
+      background-color: #e60023;
+      color: #fff;
+      border-radius: 20px;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .btn-submit:hover {
+      background-color: #b3001b;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark px-4">
+  <div class="container-fluid position-relative">
+    <a href="index.html" class="navbar-brand">⬅ Volver</a>
+    <span class="fw-bold position-absolute top-50 start-50 translate-middle">
+      Perfil Usuario
+    </span>
+  </div>
+</nav>
+
+<!-- PROFILE FORM -->
+<div class="profile-card">
+
+  <h2>Mi Perfil</h2>
+
+  <form action="/profile/update" method="POST" enctype="multipart/form-data">
+    
+    <!-- Nombre -->
+    <div class="mb-3">
+      <label for="first_name" class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+    </div>
+
+    <!-- Apellido -->
+    <div class="mb-3">
+      <label for="last_name" class="form-label">Apellido</label>
+      <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+    </div>
+
+    <!-- Celular -->
+    <div class="mb-3">
+      <label for="phone" class="form-label">Celular</label>
+      <input type="tel" class="form-control" id="phone" name="phone" value="{{ user.phone }}" required>
+    </div>
+
+    <!-- Ciudad -->
+    <div class="mb-3">
+      <label for="city" class="form-label">Ciudad</label>
+      <input type="text" class="form-control" id="city" name="city" value="{{ user.city }}" required>
+    </div>
+
+    <!-- Foto de perfil -->
+    <div class="mb-3">
+      <label for="picture" class="form-label">Foto de Perfil</label>
+      <input class="form-control" type="file" id="picture" name="picture" accept="image/*">
+    </div>
+
+    <!-- Botón Guardar -->
+    <button type="submit" class="btn btn-submit">Guardar Perfil</button>
+  </form>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>REMBIAPOPY - Servicios básicos</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Opcional: íconos de Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/styleprincipal.css">
+</head>
+<body>
+
+  <!-- navbar superior -->
+  <nav class="navbar navbar-top">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <span class="navbar-brand mb-0 h5">Rembiapopy</span>
+      <div class="d-flex gap-3 align-items-center">
+        <!-- ubicación -->
+        <span class="d-flex align-items-center"><i class="bi bi-geo-alt-fill me-1"></i> Asunción</span>
+        <!-- publicar -->
+        <a href="publicar.html" class="nav-link">Publicar</a>
+        <!-- perfil -->
+        <a href="mi_perfil.html" class="nav-link">Mi perfil</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- buscador -->
+  <section class="bg-light py-3">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-8">
+        <div class="input-group input-group-lg shadow-sm">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="bi bi-search"></i>
+          </span>
+          <input
+            type="text"
+            class="form-control border-start-0"
+            placeholder="Buscá: electricista, plomero, profesor..."
+          />
+          <button class="btn btn-danger">
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- HERO -->
+<section class="py-4">
+  <div class="container">
+    <div class="row align-items-center hero rounded-4 overflow-hidden">
+
+      <!-- TEXTO -->
+      <div class="col-12 col-md-6 p-4 text-white">
+        <h2 class="fw-bold">
+          Encontrá profesionales cerca tuyo
+        </h2>
+        <p class="mb-0">
+          Buscá y contactá expertos en Asunción y alrededores.
+        </p>
+      </div>
+
+      <!-- IMAGEN -->
+      <div class="col-12 col-md-6 d-none d-md-block p-0">
+        <img
+          src="https://picsum.photos/seed/rembiapy-hero/900/600"
+          class="img-fluid w-100 h-100"
+          style="object-fit: cover;"
+          alt="Profesional"
+        />
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- categorías -->
+  <div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5 class="mb-0">Categorías en dejado</h5>
+      <a href="#" class="text-decoration-none">Ver más &gt;</a>
+    </div>
+
+    <div class="row gx-3">
+      <!-- ejemplo de categoría -->
+      <div class="col-6 col-md-3 mb-3">
+        <div class="category-card p-3 text-center">
+          <div class="category-icon mb-2">🛠️</div>
+          <h6 class="mb-1"><a href="electricistas.html">Electricistas</a></h6>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3 mb-3">
+        <div class="category-card p-3 text-center">
+          <div class="category-icon mb-2">👨‍🔧</div>
+          <h6 class="mb-1"><a href="plomeros.html">Plomeros</a></h6>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3 mb-3">
+        <div class="category-card p-3 text-center">
+          <div class="category-icon mb-2">🔧</div>
+          <h6 class="mb-1"><a href="mecanicos.html">Mecánicos</a></h6>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3 mb-3">
+        <div class="category-card p-3 text-center">
+          <div class="category-icon mb-2">💻</div>
+          <h6 class="mb-1"><a href="tecnicos.html">Técnicos</a></h6>
+        </div>
+      </div>
+
+      <!-- más categorías si querés -->
+    </div>
+  </div>
+
+  <!-- profesionales cerca -->
+  <div class="container mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5 class="mb-0">Profesionales cerca de vos</h5>
+      <a href="#" class="text-decoration-none">Ver más &gt;</a>
+    </div>
+
+    <div class="row gx-3" id="home-profiles"></div>
+  </div>
+
+  <!-- nav inferior estilo app -->
+  <div class="bottom-nav">
+    <a href="menu_basico.html">
+      <i class="bi bi-house-fill"></i>
+      <span>Inicio</span>
+    </a>
+    
+    
+    <a href="#">
+      <i class="bi bi-heart-fill"></i>
+      <span>Favoritos</span>
+    </a>
+    <a href="mi_perfil.html">
+      <i class="bi bi-person-fill"></i>
+      <span>Mi perfil</span>
+    </a>
+    <a href="publicar.html" class="publish-btn">
+      <i class="bi bi-plus-lg"></i>
+    </a>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/auth_guard.js"></script>
+<script>
+  requireAuth();
+</script>
+<script type="module">
+  import { initHomeList } from "../js/listings.js";
+  initHomeList({
+    containerId: "home-profiles",
+    limit: 4,
+    fallback: [
+      {
+        full_name: "Juan Pérez",
+        service_title: "Electricista",
+        whatsapp: "+595 981 555 111",
+        email: "juan.perez@mail.com",
+        photo_url: "https://randomuser.me/api/portraits/men/32.jpg",
+      },
+      {
+        full_name: "Laura Gómez",
+        service_title: "Profesora de Matemática",
+        whatsapp: "+595 981 555 222",
+        email: "laura.gomez@mail.com",
+        photo_url: "https://randomuser.me/api/portraits/women/44.jpg",
+      },
+      {
+        full_name: "Ricardo Benítez",
+        service_title: "Técnico en Computadoras",
+        whatsapp: "+595 981 555 333",
+        email: "ricardo.benitez@mail.com",
+        photo_url: "https://randomuser.me/api/portraits/men/61.jpg",
+      },
+      {
+        full_name: "Mariana Díaz",
+        service_title: "Nutricionista",
+        whatsapp: "+595 981 555 444",
+        email: "mariana.diaz@mail.com",
+        photo_url: "https://randomuser.me/api/portraits/women/18.jpg",
+      },
+    ],
+  });
+</script>
+
+</body>
+</html>
