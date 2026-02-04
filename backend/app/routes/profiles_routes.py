@@ -3,6 +3,7 @@ from app.models.profile_models import (
     get_approved_profiles,
     create_profile,
     approve_profile,
+    list_categories,
 )
 
 profile_bp = Blueprint('profile', __name__)
@@ -17,6 +18,13 @@ def get_profiles():
 
     profiles = get_approved_profiles(city, category_id)
     return jsonify([dict(p) for p in profiles]), 200
+
+
+# GET /api/categories
+@profile_bp.route('/api/categories', methods=['GET'])
+def get_categories():
+    categories = list_categories()
+    return jsonify({"ok": True, "categories": categories}), 200
 
 
 # POST /api/profiles

@@ -43,3 +43,11 @@ def approve_profile(profile_id):
         (profile_id,)
     )
     db.commit()
+
+
+def list_categories():
+    db = get_db()
+    rows = db.execute(
+        "SELECT name FROM categories ORDER BY name ASC"
+    ).fetchall()
+    return [row["name"] for row in rows]

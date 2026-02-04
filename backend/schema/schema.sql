@@ -58,6 +58,3 @@ CREATE TABLE IF NOT EXISTS sessions (
   FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Datos iniciales obligatorios
-INSERT OR IGNORE INTO categories (name) VALUES
-('Plomeria'), ('Electricidad'), ('Limpieza'), ('Carpinteria'), ('Flete');
