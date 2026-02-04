@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# RembiapoPY
-=======
 # RembiapoPY 🚀
 
 Aplicación web tipo marketplace de servicios (inspirada en PedidosYa),
@@ -34,4 +31,3 @@ electricistas, profesores, técnicos, etc.
 - CSS
 - JavaScript
 - Google Identity Services (botón Google)
->>>>>>> diego/main
