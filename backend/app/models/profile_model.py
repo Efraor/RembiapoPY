@@ -70,6 +70,7 @@ def get_profile_by_user_id(user_id: int) -> Optional[dict]:
 def list_profiles(category: str = "", limit: int = 20) -> List[dict]:
     db = get_db()
 
+    # Solo perfiles profesionales (role = 'pro')
     category = (category or "").strip().lower()
     limit = max(1, min(int(limit or 20), 100))
 

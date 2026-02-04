@@ -58,6 +58,7 @@ def get_profiles():
 
 @profile_bp.get("/profile")
 def get_profile():
+    # Perfil del usuario logueado (sesion por cookie)
     token = request.cookies.get(_cookie_name(), "") or ""
     user = _get_user_by_session_token(token)
 
@@ -70,6 +71,7 @@ def get_profile():
 
 @profile_bp.post("/profile")
 def save_profile():
+    # Guarda/actualiza perfil del usuario logueado
     token = request.cookies.get(_cookie_name(), "") or ""
     user = _get_user_by_session_token(token)
 
